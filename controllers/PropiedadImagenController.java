@@ -3,6 +3,7 @@ package com.example.apartamentos.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class PropiedadImagenController {
     }
 
     @PostMapping
-    public PropiedadimagenModel saveImagen(@RequestBody PropiedadimagenModel imagen) {
+    public PropiedadimagenModel saveImagen(@Valid @RequestBody PropiedadimagenModel imagen) {
         return imagenService.saveImagen(imagen);
     }
 

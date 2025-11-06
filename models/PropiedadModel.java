@@ -17,6 +17,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "propiedades")
@@ -27,24 +31,30 @@ public class PropiedadModel {
 
     //private int id_propietario;
     //AJUSTE PARA ENLAZAR CON CLIENTE MODEL
+    @NotNull(message = "El propietario es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_propietario", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})   
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private ClienteModel propietario;
-    
+
+    @NotNull(message = "El tipo de propiedad es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_propiedad", nullable = false)
     private TipoPropiedad tipo;
-    
+
+    @NotBlank(message = "El título es obligatorio")
     @Column(name = "titulo", nullable = false, length = 100)
     private String titulo;
 
+    @NotBlank(message = "La descripción es obligatoria")
     @Column(name = "descripcion", nullable = false, length = 500)
     private String descripcion;
 
+    @NotBlank(message = "La dirección es obligatoria")
     @Column(name = "direccion", nullable = false, length = 150)
     private String direccion;
 
+    @NotBlank(message = "La ciudad es obligatoria")
     @Column(name = "ciudad", nullable = false, length = 50)
     private String ciudad;
     
@@ -54,24 +64,35 @@ public class PropiedadModel {
     @Column(name = "codigo_postal", nullable = false, length = 5)
     private int codigo_postal;
 
+    @NotBlank(message = "El país es obligatorio")
     @Column(name = "pais", nullable = false, length = 50)
     private String pais;
-    
+
+    @NotNull(message = "La latitud es obligatoria")
     @Column(name = "latitud", nullable = false)
     private double latitud;
-    
+
+    @NotNull(message = "La longitud es obligatoria")
     @Column(name = "longitud", nullable = false)
     private double longitud;
-    
+
+    @NotNull(message = "El precio por noche es obligatorio")
+    @Positive(message = "El precio por noche debe ser positivo")
     @Column(name = "precio_noche", nullable = false)
     private double precio_noche;
 
+    @NotNull(message = "La capacidad es obligatoria")
+    @Min(value = 1, message = "La capacidad debe ser al menos 1")
     @Column(name = "capacidad", nullable = false)
     private int capacidad;
 
+    @NotNull(message = "El número de habitaciones es obligatorio")
+    @Min(value = 1, message = "Debe tener al menos 1 habitación")
     @Column(name = "num_habitaciones", nullable = false)
     private int num_habitaciones;
 
+    @NotNull(message = "El número de baños es obligatorio")
+    @Min(value = 1, message = "Debe tener al menos 1 baño")
     @Column(name = "num_banos", nullable = false)
     private int num_banos;
     

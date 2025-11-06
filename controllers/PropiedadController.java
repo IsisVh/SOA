@@ -3,6 +3,7 @@ package com.example.apartamentos.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,13 +45,13 @@ public class PropiedadController {
 
     // Crear nueva propiedad
     @PostMapping
-    public PropiedadModel createPropiedad(@RequestBody PropiedadModel propiedad) {
+    public PropiedadModel createPropiedad(@Valid @RequestBody PropiedadModel propiedad) {
         return propiedadService.savePropiedad(propiedad);
     }
 
     // Actualizar propiedad existente
     @PutMapping("/{id}")
-    public ResponseEntity<PropiedadModel> updatePropiedad(@PathVariable Long id, @RequestBody PropiedadModel propiedadDetails) {
+    public ResponseEntity<PropiedadModel> updatePropiedad(@PathVariable Long id, @Valid @RequestBody PropiedadModel propiedadDetails) {
         Optional<PropiedadModel> propiedadOptional = propiedadService.getPropiedadById(id);
         if (propiedadOptional.isPresent()) {
             PropiedadModel propiedadToUpdate = propiedadOptional.get();

@@ -2,6 +2,7 @@ package com.example.apartamentos.controllers;
 
 import com.example.apartamentos.models.ClienteModel;
 import com.example.apartamentos.services.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +33,13 @@ public class ClienteController {
 
     // Crear un nuevo cliente
     @PostMapping
-    public ClienteModel createCliente(@RequestBody ClienteModel cliente) {
+    public ClienteModel createCliente(@Valid @RequestBody ClienteModel cliente) {
         return clienteService.saveCliente(cliente);
     }
 
     // Actualizar un cliente existente
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteModel> updateCliente(@PathVariable Long id, @RequestBody ClienteModel clienteDetails) {
+    public ResponseEntity<ClienteModel> updateCliente(@PathVariable Long id, @Valid @RequestBody ClienteModel clienteDetails) {
         Optional<ClienteModel> clienteOptional = clienteService.getClienteById(id);
         if (clienteOptional.isPresent()) {
             ClienteModel clienteToUpdate = clienteOptional.get();

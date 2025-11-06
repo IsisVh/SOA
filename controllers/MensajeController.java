@@ -2,6 +2,7 @@ package com.example.apartamentos.controllers;
 
 import com.example.apartamentos.models.MensajeModel;
 import com.example.apartamentos.services.MensajeService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class MensajeController {
     }
 
     @PostMapping
-    public MensajeModel saveMensaje(@RequestBody MensajeModel mensaje) {
+    public MensajeModel saveMensaje(@Valid @RequestBody MensajeModel mensaje) {
         return mensajeService.saveMensaje(mensaje);
     }
 

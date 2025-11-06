@@ -1,6 +1,9 @@
 package com.example.apartamentos.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,19 +15,29 @@ public class ResenaModel {
     @Column(name = "id_resena")
     public Integer idResena;
 
+    @NotNull(message = "La reservación es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reservacion", nullable = false)
     private ReservacionModel reservacion;
 
+    @Min(value = 1, message = "La calificación de limpieza debe ser entre 1 y 5")
+    @Max(value = 5, message = "La calificación de limpieza debe ser entre 1 y 5")
     @Column(name = "calificacion_limpieza")
     private Integer calificacionLimpieza;
 
+    @Min(value = 1, message = "La calificación de ubicación debe ser entre 1 y 5")
+    @Max(value = 5, message = "La calificación de ubicación debe ser entre 1 y 5")
     @Column(name = "calificacion_ubicacion")
     private Integer calificacionUbicacion;
 
+    @Min(value = 1, message = "La calificación de comunicación debe ser entre 1 y 5")
+    @Max(value = 5, message = "La calificación de comunicación debe ser entre 1 y 5")
     @Column(name = "calificacion_comunicacion")
     private Integer calificacionComunicacion;
 
+    @NotNull(message = "La calificación general es obligatoria")
+    @Min(value = 1, message = "La calificación general debe ser entre 1 y 5")
+    @Max(value = 5, message = "La calificación general debe ser entre 1 y 5")
     @Column(name = "calificacion_general")
     private Integer calificacionGeneral;
 

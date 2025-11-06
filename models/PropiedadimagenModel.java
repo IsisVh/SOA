@@ -1,6 +1,8 @@
 package com.example.apartamentos.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "propiedad_imagenes")
@@ -11,9 +13,11 @@ public class PropiedadimagenModel {
     @Column(name = "id_imagen")
     private Long idImagen; // ✅ Llave primaria
 
+    @NotBlank(message = "La URL de la imagen es obligatoria")
     @Column(name = "url_imagen", nullable = false, length = 255)
     private String urlImagen;
 
+    @NotNull(message = "La propiedad es obligatoria")
     @ManyToOne
     @JoinColumn(name = "id_propiedad", nullable = false) // ✅ Llave foránea
     private PropiedadModel propiedad;

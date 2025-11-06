@@ -1,5 +1,9 @@
 package com.example.apartamentos.models;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,26 +16,37 @@ public class ReservacionModel {
     @Column(name = "id_reservacion")
     public Long id;
 
+    @NotNull(message = "La propiedad es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_propiedad", nullable = false)
     private PropiedadModel propiedad;
 
+    @NotNull(message = "El cliente es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente", nullable = false)
     private ClienteModel cliente;
 
+    @NotNull(message = "La fecha de entrada es obligatoria")
+    @FutureOrPresent(message = "La fecha de entrada debe ser hoy o en el futuro")
     @Column(name = "fecha_entrada", nullable = false)
     private LocalDate fechaEntrada;
 
+    @NotNull(message = "La fecha de salida es obligatoria")
+    @FutureOrPresent(message = "La fecha de salida debe ser hoy o en el futuro")
     @Column(name = "fecha_salida", nullable = false)
     private LocalDate fechaSalida;
 
+    @NotNull(message = "El número de huéspedes es obligatorio")
+    @Min(value = 1, message = "Debe haber al menos 1 huésped")
     @Column(name = "numero_huespedes", nullable = false)
     private int numeroHuespedes;
 
+    @NotNull(message = "El precio total es obligatorio")
+    @Positive(message = "El precio total debe ser positivo")
     @Column(name = "precio_total", nullable = false)
     private double precioTotal;
 
+    @NotNull(message = "El estado es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoReservacion estado;

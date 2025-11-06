@@ -1,6 +1,8 @@
 package com.example.apartamentos.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Entity
@@ -12,16 +14,19 @@ public class DisponibilidadModel {
     @Column(name = "id_disponibilidad")
     private Long idDisponibilidad; // ✅ Llave primaria
 
+    @NotNull(message = "La propiedad es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_propiedad", nullable = false) // ✅ Llave foránea
     private PropiedadModel propiedad;
 
+    @NotNull(message = "La fecha es obligatoria")
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
     @Column(name = "disponible", nullable = false)
     private boolean disponible;
 
+    @Positive(message = "El precio especial debe ser positivo")
     @Column(name = "precio_especial")
     private Double precioEspecial;
 

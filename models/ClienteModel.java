@@ -11,6 +11,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
 @Entity
 @Table(name = "clientes")
@@ -21,25 +25,32 @@ public class ClienteModel {
     @Column(name = "id_cliente")
     private Long id;
     
+    @NotNull(message = "El tipo de cliente es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_cliente", nullable = false, length = 20)
     private TipoCliente tipo = TipoCliente.CLIENTE;
 
+    @NotBlank(message = "El nombre es obligatorio")
     @Column(name = "nombre", nullable = false, length = 35)
     private String nombres;
 
+    @NotBlank(message = "Los apellidos son obligatorios")
     @Column(name = "apellidos", nullable = false, length = 35)
     private String apellidos;
 
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El email debe ser válido")
     @Column(name = "email", unique = true, nullable = false, length = 50)
     private String email;
 
     @Column(name = "telefono", length = 15)
     private String telefono;
 
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Past(message = "La fecha de nacimiento debe ser en el pasado")
     @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
-    
+
     @Column(name = "numero_ine", unique = true, length = 20)
     private String ine;
 
@@ -49,10 +60,12 @@ public class ClienteModel {
     @Column(name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro;
 
+    @NotNull(message = "El estatus es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "estatus", nullable = false)
     private ClienteStatus estatus;
 
+    @NotBlank(message = "La contraseña es obligatoria")
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 

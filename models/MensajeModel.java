@@ -1,6 +1,8 @@
 package com.example.apartamentos.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,11 +15,13 @@ public class MensajeModel {
     private Integer idMensaje;
 
     // remitente -> FK a usuarios.id_usuario
+    @NotNull(message = "El remitente es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_remitente", nullable = false)
     private ClienteModel remitente;
 
     // destinatario -> FK a usuarios.id_usuario
+    @NotNull(message = "El destinatario es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_destinatario", nullable = false)
     private ClienteModel destinatario;
@@ -27,9 +31,11 @@ public class MensajeModel {
     @JoinColumn(name = "id_reservacion", nullable = true)
     private ReservacionModel reservacion;
 
+    @NotBlank(message = "El asunto es obligatorio")
     @Column(length = 200)
     private String asunto;
 
+    @NotBlank(message = "El contenido es obligatorio")
     @Lob
     private String contenido;
 

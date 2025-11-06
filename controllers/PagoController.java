@@ -2,6 +2,7 @@ package com.example.apartamentos.controllers;
 
 import com.example.apartamentos.models.PagoModel;
 import com.example.apartamentos.services.PagoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +33,13 @@ public class PagoController {
 
     // ✅ Crear un nuevo pago
     @PostMapping
-    public PagoModel createPago(@RequestBody PagoModel pago) {
+    public PagoModel createPago(@Valid @RequestBody PagoModel pago) {
         return pagoService.savePago(pago);
     }
 
     // ✅ Actualizar un pago existente
     @PutMapping("/{id}")
-    public ResponseEntity<PagoModel> updatePago(@PathVariable Integer id, @RequestBody PagoModel pagoDetails) {
+    public ResponseEntity<PagoModel> updatePago(@PathVariable Integer id, @Valid @RequestBody PagoModel pagoDetails) {
         Optional<PagoModel> pagoOptional = pagoService.getPagoById(id);
         if (pagoOptional.isPresent()) {
             PagoModel pagoToUpdate = pagoOptional.get();

@@ -1,6 +1,8 @@
 package com.example.apartamentos.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,21 +14,27 @@ public class PagoModel {
     @Column(name = "id_pago")
     public Long idPago; // ✅ Llave primaria
 
+    @NotNull(message = "La reservación es obligatoria")
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reservacion", nullable = false) // ✅ Llave foránea
     private ReservacionModel reservacion;
 
+    @NotNull(message = "El monto es obligatorio")
+    @Positive(message = "El monto debe ser positivo")
     @Column(name = "monto", nullable = false)
     private Double monto;
 
+    @NotNull(message = "El método de pago es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "metodo_pago", nullable = false)
     private MetodoPago metodoPago;
 
+    @NotNull(message = "El estado es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoPago estado;
 
+    @NotNull(message = "La fecha de pago es obligatoria")
     @Column(name = "fecha_pago", nullable = false)
     private LocalDateTime fechaPago;
 
